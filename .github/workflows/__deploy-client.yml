@@ -1,0 +1,36 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main # Deploy on push to the main branch
+    paths: "**"
+  pull_request:
+    branches:
+      - main # Deploy on pull request to the main branch
+    paths: "**"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+      - run: |
+          cd ./music-app-client
+          npm install
+          npm run build
+
+      # Deploy to Vercel
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          entrypoint: ./music-app-client
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          # vercel-args: "--prod" # If deploying to production
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
