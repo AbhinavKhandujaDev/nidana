@@ -27,7 +27,7 @@ jobs:
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v20
         with:
-          entrypoint: ./apps/music-app-client
+          entrypoint: ./music-app-client
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
