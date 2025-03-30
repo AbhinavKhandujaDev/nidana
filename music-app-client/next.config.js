@@ -8,9 +8,6 @@ const nextConfig = {
   env: {
     BASE_URL: process.env.BASE_URL,
   },
-  experimental: {
-    serverActions: true, // Enable Server Actions feature
-  },
 };
 
 module.exports = nextConfig;
