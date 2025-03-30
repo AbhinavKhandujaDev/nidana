@@ -25,12 +25,18 @@ type TGlobalStore = {
   markFavourite: (songId: number) => Promise<void>;
 };
 
-const setSongs = (songs: Song[]) => {
-  window.localStorage.setItem("songs", JSON.stringify(songs));
-};
-const getLocalSongs = () =>
-  JSON.parse(window.localStorage.getItem("songs") || "[]") as Song[];
-const defaultSongs = JSON.parse(window.localStorage.getItem("songs") || "[]");
+let setSongs: (songs: Song[]) => void = () => {};
+let getLocalSongs: () => Song[] = () => [];
+let defaultSongs: Song[] = [];
+
+if (typeof window !== "undefined") {
+  setSongs = (songs: Song[]) => {
+    window.localStorage.setItem("songs", JSON.stringify(songs));
+  };
+  getLocalSongs = () =>
+    JSON.parse(window.localStorage.getItem("songs") || "[]") as Song[];
+  defaultSongs = JSON.parse(window.localStorage.getItem("songs") || "[]");
+}
 
 const useGlobalStore = create<TGlobalStore>((set) => {
   return {
