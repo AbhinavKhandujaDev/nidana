@@ -110,3 +110,18 @@ const useGlobalStore = create<TGlobalStore>((set) => {
 });
 
 export default useGlobalStore;
+
+// function deleteWFRun() {
+//   const optionsOpen = document.getElementsByClassName(
+//     "timeline-comment-action"
+//   )[0];
+
+//   if (!optionsOpen) return;
+
+//   const delOpt = document.getElementsByClassName("menu-item-danger")[0];
+//   const delButton = document.getElementsByClassName("Button--danger")[0];
+
+//   optionsOpen.click();
+//   delOpt.click();
+//   delButton.click();
+// }
