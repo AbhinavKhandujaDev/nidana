@@ -40,7 +40,7 @@ function LeftSidebar() {
         />
       </div>
       <div className="flex-1 overflow-y-auto">
-        {songs.map((song, idx) => (
+        {songs.map((song) => (
           <div
             key={song.id}
             className={`flex items-center p-3 rounded-lg mb-2 cursor-pointer hover:bg-accent ${
@@ -64,7 +64,7 @@ function LeftSidebar() {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={(e) => toggleFavorite(idx, e)}
+                onClick={(e) => toggleFavorite(song.id, e)}
               >
                 {!!song.favourite ? (
                   <Heart className="h-5 w-5 text-red-500 fill-red-500" />
