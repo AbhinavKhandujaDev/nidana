@@ -36,4 +36,11 @@ jobs:
       - name: Deploy Project Artifacts
         run: |
           cd ./music-app-client
-          vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+          vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} --project-settings='{
+            "buildCommand": "npm run build",
+            "devCommand": "npm run dev",
+            "framework": "nextjs",
+            "commandForIgnoringBuildStep": "",
+            "installCommand": "npm install",
+            "outputDirectory": "out"
+          }'
