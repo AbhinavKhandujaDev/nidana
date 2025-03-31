@@ -69,7 +69,6 @@ jobs:
         run: |
           cd ./music-app-client
           vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-          cp .next/routes-manifest.json out/routes-manifest.json
 
       - name: Deploy Project Artifacts
         run: |
