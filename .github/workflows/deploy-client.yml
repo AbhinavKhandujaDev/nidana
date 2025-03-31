@@ -1,4 +1,4 @@
-name: Vercel Preview Deployment
+name: Vercel Production Deployment
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG }}
@@ -6,16 +6,11 @@ env:
 
 on:
   push:
-    branches:
-      - main # Deploy on push to the main branch
-    paths: "**"
-  pull_request:
-    branches:
-      - main # Deploy on pull request to the main branch
-    paths: "**"
+    branches-ignore:
+      - main
 
 jobs:
-  Deploy-Preview:
+  Deploy-Production:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -24,35 +19,14 @@ jobs:
         run: npm install --global vercel
 
       - name: Pull Vercel Environment Information
-        run: |
-          cd ./music-app-client
-          vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build Project Artifacts
         run: |
           cd ./music-app-client
-          vercel build --token=${{ secrets.VERCEL_TOKEN }}
+          run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts
         run: |
           cd ./music-app-client
-          curl -X POST https://api.vercel.app/v13/deployments \
-            -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d '{
-              "gitSource": {
-                "ref": "main",
-                "repoId": "'${{ secrets.VERCEL_PROJECT_ID }}'",
-                "type": "github",
-                "sha": "'$(git rev-parse HEAD)'"
-              },
-              "name": "music-app-client",
-              "projectSettings": {
-                "buildCommand": "npm run build",
-                "devCommand": "npm run dev",
-                "framework": "nextjs",
-                "commandForIgnoringBuildStep": "",
-                "installCommand": "npm install",
-                "outputDirectory": "out"
-              }
-            }'
+          run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
