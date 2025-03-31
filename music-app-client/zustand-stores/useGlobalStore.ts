@@ -4,6 +4,8 @@ import { create } from "zustand";
 
 const BASE_URL = process.env.BASE_URL;
 
+console.log({ BASE_URL });
+
 const makeurl = (path: string) => BASE_URL + path;
 
 export const USER_ID_HEADER = { "x-user-id": "123" };
