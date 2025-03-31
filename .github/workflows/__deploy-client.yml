@@ -43,8 +43,13 @@ env:
 
 on:
   push:
-    branches-ignore:
-      - main
+    branches:
+      - main # Deploy on push to the main branch
+    paths: "**"
+  pull_request:
+    branches:
+      - main # Deploy on pull request to the main branch
+    paths: "**"
 
 jobs:
   Deploy-Production:
